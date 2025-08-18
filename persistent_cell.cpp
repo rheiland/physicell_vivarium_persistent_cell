@@ -1,6 +1,4 @@
 
-// https://docs.google.com/document/d/1rxG1U6g_l0XT-2-CtrJEFT8HypmM9ygQYfiNKjdYAZI/edit?tab=t.0#heading=h.ogpvfgg7xadq
-
 // g++ persistent_cell.cpp -O3 -fomit-frame-pointer -fopenmp -m64 -std=c++11 -o persistent_cell
 
 #include <iostream>
