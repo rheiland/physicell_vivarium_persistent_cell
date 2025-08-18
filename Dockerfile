@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     build-essential \
     g++ \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
@@ -16,16 +17,16 @@ WORKDIR /app
 # Copy source files (adjust as needed for your project structure)
 COPY persistent_cell.cpp .
 #COPY persistent_cell /app/persistent_cell
-COPY results.csv /app/results.csv
+#COPY results.csv /app/results.csv
 
 RUN g++ /app/persistent_cell.cpp -O3 -fomit-frame-pointer -fopenmp -m64 -std=c++11 -o /app/persistent_cell
-RUN chmod +x /app/persistent_cell
+#RUN chmod +x /app/persistent_cell
 #RUN chmod +w /app/results.csv
 RUN chmod -R 777 /app
 #RUN touch /app/results.csv
 #RUN chmod -R 777 /app/results.csv
 
-#EXPOSE 11111
+EXPOSE 8080
 
 # Compile the C++ program
 
@@ -36,4 +37,7 @@ RUN chmod +x persistent_cell
 #CMD ["/app/persistent_cell > /app/results.csv"]
 #CMD ["/app/persistent_cell > results.csv"]
 #CMD ["/app/persistent_cell"]
-CMD ["/bin/sh", "-c", "./persistent_cell > results.csv"]
+#CMD ["/bin/sh", "-c", "./persistent_cell > results.csv"]
+#CMD ["/bin/sh", "-c", "./persistent_cell > results.csv && while true; do nc -l -p 8080 < results.csv; done"]
+CMD ["/bin/sh", "-c", "./persistent_cell"]
+#CMD ["sh", "-c", "./myprogram > output.txt 2>&1 && while true; do nc -l -p 8080 < output.txt; done"] 
